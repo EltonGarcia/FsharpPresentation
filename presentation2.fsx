@@ -43,6 +43,18 @@ let safeDivide x y =
 
 let divide = safeDivide 2.0 1.0
 
+//Units of measure
+//Nasa spacecraft crashed in Mars because the computer calcuates orbit mixing meter system and imperial system
+[<Measure>] type meters
+[<Measure>] type sec
+let someMeters = 12.0<meters>
+let someSecs = 12.0<sec>
+
+let speed = someMeters / someSecs
+let res = speed * someMeters
+//let notAllowed = someMeters + 2
+
+
 //Currying: Haskell Curry
 //f(x) = x * 2
 let sum a b =
@@ -121,6 +133,9 @@ let person = Person.create "John" "Doe"
 let fullName = person.FullName
 
 //Discriminated Unions
+type PhoneNumber = PhoneNumber of string
+type EmailAddress = EmailAddress of string
+
 type ContactMethod =
     | Telephone of int * int
     | Email of string
@@ -134,6 +149,13 @@ let contact customer =
    | Telephone (country, number) -> printfn("calling %d %d") country number
    | Email mail -> printfn("emailing %s") mail
    | Postal address -> printfn("sending %s %s") address.Line1 address.Line2
+
+//Collection APIs - similar to LINQ
+[|1..20|] |> Array.sum
+[1..20] |> List.find(fun x -> x > 10)
+
+//High Order Functions for Dependency Injection
+
 
 // Designing Behaviour Befor Data
     // To open a checking account, a customer provides
