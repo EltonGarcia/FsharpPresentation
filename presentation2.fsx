@@ -133,7 +133,7 @@ let person = Person.create "John" "Doe"
 let fullName = person.FullName
 
 //Discriminated Unions
-type PhoneNumber = PhoneNumber of string
+type PhoneNumber = PhoneNumber of int * int
 type EmailAddress = EmailAddress of string
 
 type ContactMethod =
@@ -149,6 +149,18 @@ let contact customer =
    | Telephone (country, number) -> printfn("calling %d %d") country number
    | Email mail -> printfn("emailing %s") mail
    | Postal address -> printfn("sending %s %s") address.Line1 address.Line2
+
+let PhoneCaller phone = ()
+let EmailSender email = ()
+
+// let contact phoneCaller emailSender customer =
+//     match customer.ContactMethod with
+//     | Telephone phone -> phoneCaller phone
+//     | Email mail -> emailSender mail
+//     | Postal address -> printfn("sending %s %s") address.Line1 address.Line2
+
+// let Contact = contact PhoneCaller EmailSender
+// Contact johnDoe
 
 //Collection APIs - similar to LINQ
 [|1..20|] |> Array.sum
