@@ -150,6 +150,7 @@ let contact customer =
    | Email mail -> printfn("emailing %s") mail
    | Postal address -> printfn("sending %s %s") address.Line1 address.Line2
 
+//High Order Functions for Dependency Injection
 let PhoneCaller phone = ()
 let EmailSender email = ()
 
@@ -166,12 +167,17 @@ let EmailSender email = ()
 [|1..20|] |> Array.sum
 [1..20] |> List.find(fun x -> x > 10)
 
-//High Order Functions for Dependency Injection
+//Measure execution time #time
+let rec fibonacci1 n =
+    if n <= 2L
+        then 1L
+        else fibonacci1(n - 1L) + fibonacci1(n - 2L)
 
+let fibonacci2 n =
+    let rec aux acc1 acc2 i =
+        match i with
+        | 0L -> acc1
+        | _ -> aux acc2 (acc1 + acc2) (i-1L)
+    aux 0L 1L n
 
-// Designing Behaviour Befor Data
-    // To open a checking account, a customer provides
-    // an application,
-    // two forms of identification,
-    // and an initial deposit.
-    // The deposit must be at least $500.00.
+fibonacci2 400L
