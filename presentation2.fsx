@@ -176,8 +176,37 @@ let rec fibonacci1 n =
 let fibonacci2 n =
     let rec aux acc1 acc2 i =
         match i with
-        | 0L -> acc1
-        | _ -> aux acc2 (acc1 + acc2) (i-1L)
-    aux 0L 1L n
+        | 0UL -> acc1
+        | _ -> aux acc2 (acc1 + acc2) (i-1UL)
+    aux 0UL 1UL n
 
-fibonacci2 400L
+fibonacci2 3000UL
+
+//Asynchronous programming
+let asyncLoop = async {
+    for i in [1..20] do
+        do! Async.Sleep 100
+        printfn "%d" i
+}
+let result123 = Async.RunSynchronously asyncLoop
+
+//F# Agents - MailboxProcessor
+let agent = MailboxProcessor.Start(fun inbox ->
+    let rec messageLoop() = async{
+        let! msg = inbox.Receive()
+        msg |> printfn "message received: %s"
+        return! messageLoop()
+    }
+    messageLoop()
+)
+
+let feed (agt: MailboxProcessor<string>) = async {
+    do! Async.Sleep 500
+    agt.Post "Hello"
+    do! Async.Sleep 1500
+    agt.Post "Hello again"
+}
+
+Async.RunSynchronously (feed agent)
+
+//Data to Code
