@@ -209,4 +209,4 @@ let feed (agt: MailboxProcessor<string>) = async {
 
 Async.RunSynchronously (feed agent)
 
-//Data to Code
+//Type providers - Data as Code
